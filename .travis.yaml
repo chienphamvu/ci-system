@@ -1,9 +1,20 @@
 sudo: required
 services:
   - docker
+env:
+  global:
+    - CLOUDSDK_CORE_DISABLE_PROMPTS=1
 before_install:
   - openssl aes-256-cbc -K $encrypted_1d6303a599cb_key -iv $encrypted_1d6303a599cb_iv -in ci-system-service-account.json.enc -out ci-system-service-account.json -d
   - curl https://sdk.cloud.google.com | bash > /dev/null
   - source $HOME/google-cloud-sdk/path.bash.inc
   - gcloud components update kubectl
   - gcloud auth activate-service-account --key-file ci-system-service-account.json
+  - gcloud config set project ci-system
+  - gcloud config set compute/zone asia-east1-a
+  - gcloud container clusters get-credentials ci-system-cluster
+deploy:
+  provider: script
+  script: bash ./deploy.sh
+  on:
+    branch: master

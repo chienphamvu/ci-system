@@ -1,0 +1,46 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: gerrit
+spec:
+  selector:
+    matchLabels:
+      app: gerrit # This has to match labels of template below
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: gerrit # This has to match matchLabels above
+    spec:
+      containers:
+      - name: gerrit
+        image: gerritcodereview/gerrit
+        ports:
+        - containerPort: 8080
+        volumeMounts:
+        - name: gerrit-etc
+          mountPath: /var/gerrit/etc
+        - name: gerrit-git
+          mountPath: /var/gerrit/git
+        - name: gerrit-db
+          mountPath: /var/gerrit/db
+        - name: gerrit-index
+          mountPath: /var/gerrit/index
+        - name: gerrit-cache
+          mountPath: /var/gerrit/cache
+      volumes:
+      - name: gerrit-etc
+        persistentVolumeClaim:
+          claimName: gerrit-pvc
+      - name: gerrit-git
+        persistentVolumeClaim:
+          claimName: gerrit-pvc
+      - name: gerrit-db
+        persistentVolumeClaim:
+          claimName: gerrit-pvc
+      - name: gerrit-index
+        persistentVolumeClaim:
+          claimName: gerrit-pvc
+      - name: gerrit-cache
+        persistentVolumeClaim:
+          claimName: gerrit-pvc
