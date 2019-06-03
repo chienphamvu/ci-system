@@ -18,29 +18,17 @@ spec:
         ports:
         - containerPort: 8080
         volumeMounts:
-        - name: gerrit-etc
+        - name: gerrit
           mountPath: /var/gerrit/etc
-        - name: gerrit-git
+        - name: gerrit
           mountPath: /var/gerrit/git
-        - name: gerrit-db
+        - name: gerrit
           mountPath: /var/gerrit/db
-        - name: gerrit-index
+        - name: gerrit
           mountPath: /var/gerrit/index
-        - name: gerrit-cache
+        - name: gerrit
           mountPath: /var/gerrit/cache
       volumes:
-      - name: gerrit-etc
-        persistentVolumeClaim:
-          claimName: gerrit-pvc
-      - name: gerrit-git
-        persistentVolumeClaim:
-          claimName: gerrit-pvc
-      - name: gerrit-db
-        persistentVolumeClaim:
-          claimName: gerrit-pvc
-      - name: gerrit-index
-        persistentVolumeClaim:
-          claimName: gerrit-pvc
-      - name: gerrit-cache
+      - name: gerrit
         persistentVolumeClaim:
           claimName: gerrit-pvc

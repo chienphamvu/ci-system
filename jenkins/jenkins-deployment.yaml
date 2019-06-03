@@ -28,6 +28,6 @@ spec:
         - name: jenkins-data
           mountPath: /var/jenkins/jenkins_home
       volumes:
-        - name: jenkins-data
-          persistentVolumeClaim:
-            claimName: jenkins-pvc
+      - name: jenkins-data
+        persistentVolumeClaim:
+          claimName: jenkins-pvc
